@@ -1,0 +1,23 @@
+services:
+
+  misteio.neo4j.helper:
+            class: Misteio\Neo4jBundle\Helper\Neo4jHelper
+            arguments:
+                - %neo4j.hosts%
+
+  misteio.neo4j.doctrine.subscriber:
+            class: Misteio\Neo4jBundle\Subscriber\Neo4jSubscriber
+            calls:
+                - [ setEventDispatcher, ['@event_dispatcher'] ]
+                - [ setContainer, ['@service_container'] ]
+                - [ setNeo4jFactory, ['@misteio.neo4j.factory'] ]
+            tags:
+                - { name: doctrine.event_subscriber }
+            arguments:
+                - %neo4j.mappings%
+
+
+  misteio.neo4j.factory:
+              class: Misteio\Neo4jBundle\Factory\Neo4jFactory
+              calls:
+                  - [ setNeo4jHelper, ['@misteio.neo4j.helper'] ]

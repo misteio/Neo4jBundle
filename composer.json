@@ -1,0 +1,33 @@
+{
+    "name": "misteio/neo4j-bundle",
+    "type": "symfony-bundle",
+    "description": "Neo4j Bundle",
+    "homepage": "https://github.com/Misteio/Neo4jBundle",
+    "keywords": ["doctrine", "neo4j", "graph", "nosql"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MisTeIO",
+            "homepage": "http://miste.io"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "symfony/framework-bundle": "~2.8|~3.0",
+		"symfony/console": "~2.8|~3.0",
+		"symfony/finder": "~2.8|~3.0",
+		"symfony/validator": "~2.8|~3.0",
+		"symfony/process": "~2.8|~3.0",
+        "graphaware/neo4j-php-client": "4.8.1",
+        "doctrine/doctrine-bundle": ">=1.4",
+        "doctrine/orm": ">=2.4.8",
+        "doctrine/doctrine-fixtures-bundle": ">=2.3"
+    },
+	"require-dev": {
+		"phpunit/phpunit": "6.0.9",
+        "codeclimate/php-test-reporter": "dev-master"
+	},
+    "autoload": {
+        "psr-4": {"Misteio\\Neo4jBundle\\": ""}
+    }
+}
