@@ -27,6 +27,8 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
     protected $batch = false;
     /** @var bool  */
     protected $reset = false;
+    /** @var bool  */
+    protected $resetIndex = false;
     /** @var  string */
     protected $type;
     /** @var  array */
@@ -78,6 +80,10 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
                 null)
 
             ->addOption(
+                'reset_index',
+                null)
+
+            ->addOption(
                 'batch',
                 null,
                 InputOption::VALUE_OPTIONAL,
@@ -100,6 +106,7 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
         $this->type                                 = $input->getOption('type');
         $this->batch                                = $input->getOption('batch');
         $this->reset                                = $input->getOption('reset');
+        $this->resetIndex                           = $input->getOption('reset_index');
         $this->output                               = $output;
         $this->neo4jHelper                          = $this->getContainer()->get('misteio.neo4j.helper');
         $this->mappings                             = $this->getContainer()->getParameter('neo4j.mappings');
@@ -267,10 +274,8 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
         $this->neo4jFactory->removeAllFromNeo4j($type, $this->mappings[$type]['connection']);
         if(array_key_exists('indexes', $this->mappings[$type])) {
             foreach ($this->mappings[$type]['indexes'] as $index) {
-                try {
+                if($this->resetIndex){
                     $this->neo4jFactory->dropIndex($type, $this->mappings[$type]['connection'], $index);
-                } catch (\Exception $e) {
-                    throw new \Exception($e);
                 }
                 $this->neo4jFactory->createIndex($type, $this->mappings[$type]['connection'], $index);
             }
@@ -278,10 +283,8 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
 
         if(array_key_exists('composite_indexes', $this->mappings[$type])){
             foreach ($this->mappings[$type]['composite_indexes'] as $index){
-                try{
+                if($this->resetIndex){
                     $this->neo4jFactory->dropCompositeIndex($type, $this->mappings[$type]['connection'], $index);
-                }catch(\Exception $e){
-                    throw new \Exception($e);
                 }
                 $this->neo4jFactory->createCompositeIndex($type, $this->mappings[$type]['connection'], $index);
             }

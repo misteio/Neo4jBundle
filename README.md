@@ -251,7 +251,8 @@ After configuration of your entities, you maybe want make them available on Neo4
 * --offset=int : Offset of your collection 
 * --type=string : Name of your Object (in our example it's YourEntityClassName)
 * --threads=int : Number of threads you want to use for. If you use it, limit will not be available, and you have to set a batch.
-* --reset : For reset your indexes. BE CAREFULL, all your data will be lost in your Neo4j Cluster
+* --reset : For delete all your Nodes. Can be passed with a type. If type is passed will deleted all node of entity chosen. BE CAREFULL, all your data will be lost in your Neo4j Cluster
+* --reset_index : For reset your indexes. Must be passed with reset
 * --batch=int : Length of collection per threads. Use this only with threads
 
 
