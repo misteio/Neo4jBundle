@@ -14,12 +14,14 @@ matrix:
     - php: 7.1
     - env: SYMFONY_VERSION=2.8.*
 
-before_install:
-    - sudo apt-get update > /dev/null
-    - sh -c ./build/install-jdk8.sh
-    - sh -c ./build/install-neo.sh
-    - composer self-update
-    - travis_retry composer install --prefer-source --no-interaction
+before_script:
+  - wget -O - http://debian.neo4j.org/neotechnology.gpg.key >> key.pgp
+  - sudo apt-key add key.pgp
+  - echo 'deb http://debian.neo4j.org/repo stable/' | sudo tee -a    - /etc/apt/sources.list.d/neo4j.list > /dev/null
+  - sudo apt-get update && sudo apt-get install neo4j
+  - sleep 10
+  - "curl -H \"Content-Type: application/json\" -X POST -d '{\"password\":\"password\"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password"
+
 
 install:
   - composer require symfony/framework-bundle:${SYMFONY_VERSION}
