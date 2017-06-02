@@ -1,0 +1,16 @@
+parameters:
+    neo4j.hosts:
+      graphenedb:
+             host: 'localhost'
+             port: 7474
+             user: 'neo4j'
+             password: 'neo4j'
+
+    neo4j.mappings:
+      FakeEntity:
+        class: '\Misteio\Neo4jBundle\Tests\Entity\FakeEntity'
+        transformer: 'neo4j.fakeentity.transformer'
+        auto_event: true
+        connection: 'graphenedb'
+        indexes:
+          - 'name'

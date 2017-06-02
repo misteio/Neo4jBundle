@@ -8,5 +8,3 @@ composer\.phar
 composer\.lock
 
 \.idea/
-
-Tests/App/parameters\.yml
