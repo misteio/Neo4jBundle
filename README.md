@@ -1,8 +1,8 @@
 Neo4jSearchBundle
 =========
 
-[![Build Status](https://travis-ci.org/Misteio/Neo4jBundle.svg?branch=master)](https://travis-ci.org/Misteio/Neo4jBundle)
-[![Code Climate](https://codeclimate.com/github/Misteio/Neo4jBundle/badges/gpa.svg)](https://codeclimate.com/github/Misteio/Neo4jBundle)
+[![Build Status](https://travis-ci.org/misteio/Neo4jBundle.svg?branch=master)](https://travis-ci.org/misteio/Neo4jBundle)
+[![Code Climate](https://codeclimate.com/github/misteio/Neo4jBundle/badges/gpa.svg)](https://codeclimate.com/github/misteio/Neo4jBundle)
 [![Latest Stable Version](https://poser.pugx.org/misteio/neo4j-bundle/v/stable)](https://packagist.org/packages/misteio/neo4j-bundle)
 [![codecov](https://codecov.io/gh/Misteio/Neo4jBundle/branch/master/graph/badge.svg)](https://codecov.io/gh/misteio/Neo4jBundle)
 
