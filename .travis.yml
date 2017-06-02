@@ -1,6 +1,3 @@
-dist: trusty
-sudo: required
-
 language: php
 
 php:
@@ -14,8 +11,12 @@ matrix:
     - php: 7.1
     - env: SYMFONY_VERSION=2.8.*
 
-services:
-  - neo4j
+before_install:
+    - sudo apt-get update > /dev/null
+    - sh -c ./build/install-jdk8.sh
+    - sh -c ./build/install-neo.sh
+    - composer self-update
+    - travis_retry composer install --prefer-source --no-interaction
 
 install:
   - composer require symfony/framework-bundle:${SYMFONY_VERSION}
