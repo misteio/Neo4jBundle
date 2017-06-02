@@ -13,7 +13,7 @@ Neo4jBundle is a Symfony Bundle designed for simply use Neo4J 3.x with Doctrine 
 Via Composer
 
 ``` bash
-$ composer require misteio/neo4jbundle-bundle
+$ composer require misteio/neo4j-bundle
 ```
 or in composer.json file
 ``` bash
