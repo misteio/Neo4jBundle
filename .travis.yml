@@ -19,7 +19,10 @@ before_script:
   - wget -O - http://debian.neo4j.org/neotechnology.gpg.key >> key.pgp
   - sudo apt-key add key.pgp
   - echo 'deb http://debian.neo4j.org/repo stable/' | sudo tee -a    - /etc/apt/sources.list.d/neo4j.list > /dev/null
-  - sudo apt-get update && sudo apt-get install neo4j
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y neo4j
   - sleep 20
   - "curl -H \"Content-Type: application/json\" -X POST -d '{\"password\":\"password\"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password"
 
