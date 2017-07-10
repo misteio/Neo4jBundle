@@ -27,7 +27,7 @@ public function registerBundles()
 {
     return array(
         // ...
-        new Misteio\Neo4jBundle\Neo4jBundle(),
+        new Misteio\Neo4jBundle\MisteioNeo4jBundle(),
         // ...
     );
 }
