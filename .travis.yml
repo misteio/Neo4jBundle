@@ -24,7 +24,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install -y neo4j
   - sleep 20
-  - "curl -H \"Content-Type: application/json\" -X POST -d '{\"password\":\"password\"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password"
+  - >
+    curl -H "Content-Type: application/json" -X POST -d '{"password":"password"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password
 
 
 install:
