@@ -58,8 +58,8 @@ parameters:
       graphenedb:
              host: 'yourHostWithoutScheme'
              port: yourPort
-             user: 'username'
-             password: 'yourPassword'
+             user: username
+             password: yourPassword
 
     neo4j.mappings:
       FakeEntity:
