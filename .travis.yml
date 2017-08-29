@@ -11,6 +11,9 @@ env:
   - SYMFONY_VERSION=2.8.*
   - SYMFONY_VERSION=3.2.*
 
+jdk:
+  - oraclejdk8
+
 matrix:
   allow_failures:
     - php: 7.0
@@ -21,9 +24,9 @@ before_script:
   - echo 'deb http://debian.neo4j.org/repo stable/' | sudo tee -a    - /etc/apt/sources.list.d/neo4j.list > /dev/null
 
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y neo4j
-  - sudo service neo4j start
+  - wget dist.neo4j.org/neo4j-community-3.2.2-unix.tar.gz
+  - tar -xzf neo4j-community-3.2.2-unix.tar.gz
+  - neo4j-community-3.2.2/bin/neo4j start
   - sleep 20
   - >
     curl -H "Content-Type: application/json" -X POST -d '{"password":"password"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password
