@@ -41,6 +41,8 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
     protected $em;
     /** @var  Neo4jFactory */
     protected $neo4jFactory;
+    /** @var  string */
+    protected $consoleDir;
 
     protected function configure()
     {
@@ -121,6 +123,8 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
             $this->limit = $this->batch ;
         }
 
+        $symfony_version    = \Symfony\Component\HttpKernel\Kernel::VERSION;
+        $this->consoleDir   = $symfony_version[0] == 2 ? 'app/console' : 'bin/console';
 
         if($input->getOption('type')){
             $this->_switchType($this->type, $this->batch);
@@ -207,10 +211,9 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
         $aProcess = [];
         $total    =  floor(($numberObjects - $this->offset) / $this->limit);
         $progressBar = new ProgressBar($this->output,$numberObjects - $this->offset);
-
         for ($i = 0; $i <= $total; $i++) {
             $_offset = $this->offset + ($this->limit * $i);
-            $process = new Process("php app/console misteio:neo4j:populate --type={$type} --limit={$this->limit} --offset={$_offset}");
+            $process = new Process("php $this->consoleDir misteio:neo4j:populate --type={$type} --limit={$this->limit} --offset={$_offset}");
             $aProcess[] = $process;
         }
 

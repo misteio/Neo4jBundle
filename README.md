@@ -6,7 +6,7 @@ Neo4jSearchBundle
 [![Latest Stable Version](https://poser.pugx.org/misteio/neo4j-bundle/v/stable)](https://packagist.org/packages/misteio/neo4j-bundle)
 [![codecov](https://codecov.io/gh/Misteio/Neo4jBundle/branch/master/graph/badge.svg)](https://codecov.io/gh/misteio/Neo4jBundle)
 
-Neo4jBundle is a Symfony Bundle designed for simply use Neo4J 3.x with Doctrine 2.x
+Neo4jBundle is a Symfony2/3 Bundle designed for simply use Neo4J 3.x with Doctrine 2.x
 
 ## Installation
 
@@ -245,7 +245,7 @@ class Neo4jListener
 ``` 
 
 ## Command for populate
-After configuration of your entities, you maybe want make them available on Neo4j. You have to use `php app/console misteio:neo4j:populate`. Differents options are available :
+After configuration of your entities, you maybe want make them available on Neo4j. You have to use `php app/console misteio:neo4j:populate` for Symfony 2 or `php bin/console misteio:neo4j:populate` for Symfony 3. Differents options are availables :
 
 * --limit=int : Limit of your collection
 * --offset=int : Offset of your collection 
