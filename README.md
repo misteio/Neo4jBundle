@@ -267,7 +267,7 @@ If you discover a security vulnerability , please email instead of using the iss
 1. clone repo : `$ sudo git clone https://github.com/Misteio/Neo4jBundle.git`
 2. go into directory : `$ cd Neo4jBundle/`
 3. install composer as explained here : https://getcomposer.org/download/
-4. launch composer update : `$ ./composer.phar update`
+4. launch composer install : `$ ./composer.phar install`
 5. launch test : `$ ./vendor/bin/phpunit`
 
 ## License

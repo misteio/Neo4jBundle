@@ -127,7 +127,7 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
         $this->consoleDir   = $symfony_version[0] == 2 ? 'app/console' : 'bin/console';
 
         if($input->getOption('type')){
-            $this->_switchType($this->type, $this->batch);
+            return $this->_switchType($this->type, $this->batch);
         }else{
             foreach ($this->aTypes as $type){
                 $this->_switchType($type, $this->batch);
@@ -138,6 +138,7 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
     /**
      * @param $type
      * @param $batch
+     * @return int
      */
     private function _switchType($type, $batch){
         if(in_array($type, $this->aTypes)){
@@ -155,6 +156,7 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
 
         }else{
             $this->output->writeln("********************** Wrong Type ***********************");
+            return 1;
         }
     }
 
@@ -169,6 +171,7 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
      */
     public function runParallel(ProgressBar $progressBar, array $processes, $maxParallel, $poll = 1000)
     {
+        $helper = $this->getHelper('process');
         // do not modify the object pointers in the argument, copy to local working variable
         $processesQueue = $processes;
         // fix maxParallel to be max the number of processes or positive
@@ -178,7 +181,13 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
         $currentProcesses = array_splice($processesQueue, 0, $maxParallel);
         // start the initial stack of processes
         foreach ($currentProcesses as $process) {
-            $process->start();
+            $helper->run($this->output, $process, 'The process failed :(', function ($type, $data) {
+                if (Process::ERR === $type) {
+                    if(strlen($data) > 50){
+                        $this->output->writeln($data);
+                    }
+                }
+            });
         }
         do {
             // wait for the given time
@@ -191,13 +200,17 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
                     // directly add and start new process after the previous finished
                     if (count($processesQueue) > 0) {
                         $nextProcess = array_shift($processesQueue);
-                        $nextProcess->start();
-
+                        $helper->run($this->output, $nextProcess, 'The process failed :(', function ($type, $data) {
+                            if (Process::ERR === $type) {
+                                if(strlen($data) > 50){
+                                    $this->output->writeln($data);
+                                }
+                            }
+                        });
                         $currentProcesses[] = $nextProcess;
                     }
                 }
             }
-
             // continue loop while there are processes being executed or waiting for execution
         } while (count($processesQueue) > 0 || count($currentProcesses) > 0);
 
@@ -272,7 +285,10 @@ class PopulateNeo4jCommand extends ContainerAwareCommand
 
     }
 
-
+    /**
+     * Reset Index + Entities from Neo4j
+     * @param $type string
+     */
     private function _reset($type){
         $this->neo4jFactory->removeAllFromNeo4j($type, $this->mappings[$type]['connection']);
         if(array_key_exists('indexes', $this->mappings[$type])) {

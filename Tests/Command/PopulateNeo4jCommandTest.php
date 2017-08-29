@@ -90,4 +90,30 @@ class PopulateNeo4jCommandTest extends KernelTestCase
         $this->assertEquals(100, count($result->getRecords()));
     }
 
+
+    public function testCommandRunParallel()
+    {
+        $optionsRunParallel = [
+            'command'   => 'misteio:neo4j:populate',
+            '--reset'   => true,
+            '--type'    => 'FakeEntity',
+            '--batch'   => '10',
+            '--threads' => '4',
+        ];
+        $this->application->run(new ArrayInput($optionsRunParallel));
+
+        $client = $this->_neo4jHelper->getClient('graphenedb');
+        $result = $client->run("Match (n:FakeEntity) RETURN n;");
+        $this->assertGreaterThan(-1, count($result->getRecords()));
+    }
+
+    public function testCommandWrongType()
+    {
+        $optionsWrongType = [
+            'command'  => 'misteio:neo4j:populate',
+            '--type'   => 'UnknownType',
+        ];
+        $returnValue = $this->application->run(new ArrayInput($optionsWrongType));
+        self::assertNotEquals(0, $returnValue, 'This command should failed: UNKNOWN TYPE');
+    }
 }
