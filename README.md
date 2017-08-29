@@ -1,4 +1,4 @@
-Neo4jSearchBundle
+Neo4jBundle
 =========
 
 [![Build Status](https://travis-ci.org/misteio/Neo4jBundle.svg?branch=master)](https://travis-ci.org/misteio/Neo4jBundle)
